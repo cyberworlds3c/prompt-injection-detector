@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #12121f;
+      color: #e0e0e0;
+      width: 380px;
+      min-height: 500px;
+      font-size: 13px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 16px 16px 14px;
+      border-bottom: 1px solid #2a2a4a;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(233,69,96,0.4);
+      overflow: hidden;
+    }
+    .logo-mark img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .header-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-title h1 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f0f0f0;
+      letter-spacing: 0.2px;
+      line-height: 1.2;
+    }
+
+    .header-title .subtitle {
+      font-size: 10px;
+      color: #e94560;
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .level-selector {
+      display: flex;
+      background: rgba(0,0,0,0.25);
+      border-radius: 7px;
+      padding: 3px;
+      gap: 2px;
+      margin-bottom: 10px;
+    }
+    .level-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: #666;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      letter-spacing: 0.3px;
+    }
+    .level-btn:hover { color: #aaa; }
+    .level-btn.active[data-level="normal"] { background: #2a5c45; color: #4caf50; }
+    .level-btn.active[data-level="high"]   { background: #5c4a1a; color: #ff9800; }
+    .level-btn.active[data-level="ultra"]  { background: #5c1a1a; color: #e94560; }
+
+    #scanBtn {
+      background: linear-gradient(135deg, #e94560, #c0392b);
+      color: #fff;
+      border: none;
+      padding: 9px 0;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      width: 100%;
+      letter-spacing: 0.4px;
+      box-shadow: 0 2px 6px rgba(233,69,96,0.35);
+    }
+    #scanBtn:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+    #scanBtn:active:not(:disabled) { transform: translateY(0); }
+    #scanBtn:disabled { background: #2a2a3e; color: #555; cursor: not-allowed; box-shadow: none; }
+
+    .status-bar {
+      padding: 8px 16px;
+      font-size: 11px;
+      color: #888;
+      background: #0e0e1c;
+      border-bottom: 1px solid #1e1e3a;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+    }
+    .status-bar.clean  { color: #4caf50; }
+    .status-bar.threat { color: #ff9800; }
+    .status-bar.error  { color: #f44336; }
+
+    #findings { padding: 12px; }
+
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      color: #444;
+    }
+    .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-state p { font-size: 13px; line-height: 1.6; }
+
+    .findings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .finding-card {
+      background: #1a1a2e;
+      border-radius: 7px;
+      padding: 11px 13px;
+      border-left: 3px solid #e94560;
+      transition: background 0.15s;
+    }
+    .finding-card[data-index]:hover {
+      background: #22223e;
+    }
+    .finding-card.medium { border-left-color: #ff9800; }
+
+    .finding-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .badge.high   { background: rgba(233,69,96,0.2);  color: #e94560; }
+    .badge.medium { background: rgba(255,152,0,0.2);  color: #ff9800; }
+
+    .keyword-pill {
+      font-size: 11px;
+      color: #ccc;
+      background: rgba(255,255,255,0.06);
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
+    }
+
+    .hidden-tag {
+      margin-left: auto;
+      font-size: 10px;
+      color: #666;
+      flex-shrink: 0;
+    }
+
+    .locate-icon {
+      font-size: 12px;
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+    .finding-card[data-index]:hover .locate-icon { opacity: 1; }
+
+    .snippet {
+      font-size: 12px;
+      color: #bbb;
+      line-height: 1.55;
+      word-break: break-word;
+      background: rgba(0,0,0,0.2);
+      border-radius: 4px;
+      padding: 7px 9px;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-logo-row">
+      <div class="logo-mark"><img src="icon128.png" alt="AI Shield"></div>
+      <div class="header-title">
+        <h1>Hidden Prompt Injection Detector</h1>
+        <div class="subtitle">AI Security Scanner</div>
+      </div>
+    </div>
+    <div class="level-selector">
+      <button class="level-btn active" data-level="normal">🟢 Normal</button>
+      <button class="level-btn" data-level="high">🟠 High</button>
+      <button class="level-btn" data-level="ultra">🔴 Ultra</button>
+    </div>
+    <button id="scanBtn">⬡ Scan Page</button>
+  </div>
+
+  <div class="status-bar" id="statusBar">Ready — click Scan to inspect this page.</div>
+
+  <div id="findings">
+    <div class="empty-state">
+      <div class="icon">🔍</div>
+      <p>Scan the page to check for<br>hidden AI prompt injections.</p>
+    </div>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

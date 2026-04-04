@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Hidden Prompt Injection Detector",
+  "version": "1.0.0",
+  "description": "Detects hidden prompt injection instructions that might manipulate AI models like Copilot.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_title": "AI Shield",
+    "default_popup": "sidepanel.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "aishield@extension",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"],
+        "optional": []
+      }
+    }
+  },
+  "minimum_chrome_version": "114"
+}
