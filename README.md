@@ -73,14 +73,17 @@ These hidden instructions can attempt to make an AI exfiltrate your data, bypass
 
 A realistic demo page (`demo-malicious-site.html`) is included. It mimics a legitimate recipe website with **6 hidden prompt injection attacks** embedded using different techniques:
 
-| # | Technique | Detected at |
-|---|---|---|
-| 1 | HTML comment (`<!-- AI: ... -->`) | All levels |
-| 2 | `display:none` div | All levels |
-| 3 | Zero-opacity span | All levels |
-| 4 | HTML comment with `exfiltrate` keyword | High + Ultra |
-| 5 | Same-colour-as-background text | All levels |
-| 6 | `visibility:hidden` div | All levels |
+| # | Technique                              | Detected at  |
+| - | -------------------------------------- | ------------ |
+| 1 | HTML comment (`<!-- AI: ... -->`)    | All levels   |
+| 2 | `display:none` div                   | All levels   |
+| 3 | Zero-opacity span                      | All levels   |
+| 4 | Same-colour-as-background text         | All levels   |
+| 5 | `assistant:` comment (prompt format) | High + Ultra |
+| 6 | `visibility:hidden` element          | High + Ultra |
+| 7 | `system:` comment (prompt format)    | Ultra only   |
+| 8 | `[INST]` comment (Llama format)      | Ultra only   |
+| 9 | Hidden roleplay/persona element        | Ultra only   |
 
 Open the file in Chrome, then run the extension on it to see all detections in action.
 
