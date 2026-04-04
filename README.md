@@ -1,6 +1,6 @@
 # 🛡️ AI Shield — Hidden Prompt Injection Detector
 
-A browser extension (Chrome + Firefox) that scans web pages for hidden prompt injection attacks — malicious instructions embedded in websites that attempt to hijack AI assistants like GitHub Copilot, ChatGPT, and others.
+A browser extension (Chrome + Firefox) that scans web pages for hidden prompt injection attacks — malicious instructions embedded in websites that attempt to hijack AI assistants like GitHub Copilot, Claude, ChatGPT, and others.
 
 ---
 
@@ -35,14 +35,12 @@ These hidden instructions can attempt to make an AI exfiltrate your data, bypass
 
 ## Screenshots
 
-> *(Add screenshots of the side panel showing findings on the demo site)*
+<img width="380" height="600" alt="Screenshot 2026-04-04 at 4 29 42 PM" src="https://github.com/user-attachments/assets/f4e777fe-be6d-4424-8d3b-2bb4210233b4" />
+<img width="380" height="596" alt="Screenshot 2026-04-04 at 4 29 33 PM" src="https://github.com/user-attachments/assets/9e7067f3-8ff8-4ee9-b85e-15bd7b25fa14" />
 
 ---
 
 ## Installation
-
-### From the Chrome Web Store
-> *(Link coming soon)*
 
 ### Manual Install — Chrome
 
