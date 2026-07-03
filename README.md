@@ -42,6 +42,8 @@ These hidden instructions can attempt to make an AI exfiltrate your data, bypass
 
 ## Installation
 
+As a add-on: https://addons.mozilla.org/en-US/firefox/addon/prompt-injection-detector/
+
 ### Manual Install — Chrome
 
 1. Clone or download this repository
